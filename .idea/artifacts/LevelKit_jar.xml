@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LevelKit:jar">
+    <output-path>$PROJECT_DIR$/Build/artifacts/LevelKit_jar</output-path>
+    <root id="archive" name="LevelKit.jar">
+      <element id="module-output" name="LevelKit" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.4.6/HikariCP-2.4.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.16/slf4j-api-1.7.16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/java jars/spigot-1.10.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

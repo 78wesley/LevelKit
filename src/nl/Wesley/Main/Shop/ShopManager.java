@@ -43,13 +43,13 @@ public class ShopManager implements Listener{
         villager.setCustomNameVisible(true);
         villager.setSilent(true);
         villager.setRemoveWhenFarAway(false);
-        villager.setInvulnerable(true);
         villager.setBreed(false);
         villager.setCanPickupItems(false);
         villager.setGliding(false);
         villager.setGlowing(false);
         villager.setGravity(true);
         villager.setCollidable(false);
+        villager.setInvulnerable(true);
         if (villager.isInvulnerable()) {
             return;
         }

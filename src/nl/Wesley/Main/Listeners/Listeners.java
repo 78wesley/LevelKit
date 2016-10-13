@@ -27,14 +27,14 @@ public class Listeners implements Listener{
         Player p = event.getPlayer();
         if (event.getPlayer().hasPlayedBefore() || !event.getPlayer().hasPlayedBefore()) {
 
-            final Profile profile = new Profile(p);
-            PLUGIN.getProfiles().put(p.getUniqueId(), profile);
-            new ProfileLoader(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
+       //     final Profile profile = new Profile(p);
+        //    PLUGIN.getProfiles().put(p.getUniqueId(), profile);
+         //   new ProfileLoader(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
         }
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        final Profile profile = new Profile(e.getPlayer());
-        new ProfileLoader(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
+   //     final Profile profile = new Profile(e.getPlayer());
+    //    new ProfileLoader(profile, PLUGIN).runTaskAsynchronously(PLUGIN);
     }
 }

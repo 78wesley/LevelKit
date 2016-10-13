@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="LevelKit:jar">
-    <output-path>$PROJECT_DIR$/Build/artifacts/LevelKit_jar</output-path>
+  <artifact type="jar" name="LevelKit.jar">
+    <output-path>$PROJECT_DIR$/Build/LevelKit.jar</output-path>
     <root id="archive" name="LevelKit.jar">
       <element id="module-output" name="LevelKit" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/zaxxer/HikariCP/2.4.6/HikariCP-2.4.6.jar" path-in-jar="/" />

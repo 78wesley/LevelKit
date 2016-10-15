@@ -23,7 +23,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class LevelKit extends JavaPlugin implements Listener{
 
-
     public Plugin plugin = this;
     static Logger log = Logger.getLogger("Minecraft");
     String version = " v" + this.getDescription().getVersion();

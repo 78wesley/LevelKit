@@ -25,9 +25,11 @@ public class Listeners implements Listener {
      */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Player p = event.getPlayer();
-        if (event.getPlayer().hasPlayedBefore() || !event.getPlayer().hasPlayedBefore()) {
-            DatabaseSetup.player_serverJoined(p);
+        Player player = event.getPlayer();
+        if (event.getPlayer().hasPlayedBefore()){
+            DatabaseSetup.addIntPlayerServerJoined(player);
+        } else  if (!player.hasPlayedBefore()) {
+            DatabaseSetup.addNewPlayer(player);
         }
     }
 

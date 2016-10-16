@@ -59,11 +59,11 @@ public class ShopManager implements Listener{
     @EventHandler
     public void ShopEntityClickEvent(PlayerInteractEntityEvent e) {
         Entity clicked = e.getRightClicked();
-        Player p = e.getPlayer();
+        Player player = e.getPlayer();
         if (e.getRightClicked().getName().equalsIgnoreCase(RED + "Kit Selector")){
             e.setCancelled(true);
             if (clicked.getCustomName().equals(RED + "Kit Selector")) {
-                KitManager.KitSelectInventory(p);
+                KitManager.KitSelectInventory(player);
             }
         }
     }

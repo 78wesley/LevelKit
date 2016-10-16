@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Kits {
 
-    static void Startter(Player p) {
+    static void Startter(Player player) {
         ItemStack Helmet = new ItemStack(Material.LEATHER_HELMET);
         ItemStack Chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemStack Leggings = new ItemStack(Material.LEATHER_LEGGINGS);
@@ -21,13 +21,13 @@ public class Kits {
         ItemStack Sword = new ItemStack(Material.STONE_SWORD);
         ItemStack Arrow = new ItemStack(Material.ARROW);
 
-        p.getInventory().setHelmet(Helmet);
-        p.getInventory().setChestplate(Chestplate);
-        p.getInventory().setLeggings(Leggings);
-        p.getInventory().setBoots(Boots);
-        p.getInventory().setItemInOffHand(Shield); // SHIELD IN OFFHAND
-        p.getInventory().setItem(0, Bow);
-        p.getInventory().setItem(1, Sword);
-        p.getInventory().setItem(9, Arrow);
+        player.getInventory().setHelmet(Helmet);
+        player.getInventory().setChestplate(Chestplate);
+        player.getInventory().setLeggings(Leggings);
+        player.getInventory().setBoots(Boots);
+        player.getInventory().setItemInOffHand(Shield); // SHIELD IN OFFHAND
+        player.getInventory().setItem(0, Bow);
+        player.getInventory().setItem(1, Sword);
+        player.getInventory().setItem(9, Arrow);
     }
 }

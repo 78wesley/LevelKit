@@ -35,24 +35,24 @@ public class KitManager implements Listener {
         inv.setItem(0, StarterKit);
         player.openInventory(inv);
     }
-    // weet niet of diet werkt zo 123 uit mijn hoofd
+    // weet niet of dit werkt zo 123 uit mijn hoofd
 
     @EventHandler
     public void KitSelectClickEvent(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         Inventory inv = e.getInventory();
+        if (e.getSlotType() == SlotType.OUTSIDE){
+            return;
+        }
         if (inv.getName().equalsIgnoreCase(RED + "Kit Selector")) {
             e.setCancelled(true);
             if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(BLUE + "Kit Starter") ) {
-                Kits.Startter(player);
+                Kits.Starter(player);
                 player.closeInventory();
             }
             else if (e.getCurrentItem() == null) {
                 return;
             }
-        }
-        if (e.getSlotType() == SlotType.OUTSIDE){
-            return;
         }
     }
 }

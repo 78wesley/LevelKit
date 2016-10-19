@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Kits {
 
-    static void Startter(Player player) {
+    static void Starter(Player player) {
         ItemStack Helmet = new ItemStack(Material.LEATHER_HELMET);
         ItemStack Chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemStack Leggings = new ItemStack(Material.LEATHER_LEGGINGS);

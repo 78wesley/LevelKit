@@ -1,36 +1,38 @@
 package nl.Wesley.Main.Database;
 
 import nl.Wesley.Main.LevelKit;
-import org.bukkit.Bukkit;
+import nl.Wesley.Main.Listeners.ScoreboardListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
 import java.sql.*;
 
 /**
  * Created by Wesley on 10/11/2016.
  */
-public class DatabaseSetup  extends LevelKit {
+public class DatabaseSetup {
+
+    static int playerServerJoined;
+    static int playerCustomLevel;
 
     public static Connection connection;
 
     public synchronized static void openConnection() {
         try {
-            System.out.println(ChatColor.AQUA + "CONNECTED WITH THE MYSQL DATABASE");
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/minecraft", "root", "toor");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public synchronized static void closeConnection() {
         try {
-            System.out.println(ChatColor.AQUA + "DISCONNECTED WITH THE MYSQL DATABASE");
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public synchronized static void disableConnection() {
         try {
             if (connection != null && connection.isClosed()) {
@@ -40,6 +42,7 @@ public class DatabaseSetup  extends LevelKit {
             e.printStackTrace();
         }
     }
+
     public synchronized static boolean playerDataContainsPlayer(Player player) {
         try {
             PreparedStatement sql = connection.prepareStatement("SELECT * FROM `player_data` WHERE player_name=?;");
@@ -54,6 +57,22 @@ public class DatabaseSetup  extends LevelKit {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public synchronized static void addNewPlayer(Player player) {
+        openConnection();
+        try {
+            System.out.println(ChatColor.AQUA + "CREATING NEW TABLE FOR " + player.getName());
+            PreparedStatement newPlayer = connection.prepareStatement("INSERT INTO `player_data` values(?,?,0,0,0);");
+            newPlayer.setString(1, player.getPlayer().getName());
+            newPlayer.setString(2, player.getPlayer().getUniqueId().toString());
+            newPlayer.execute();
+            newPlayer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -76,6 +95,8 @@ public class DatabaseSetup  extends LevelKit {
                 player_serverjoinedUpdate.close();
                 sql.close();
                 result.close();
+            } else {
+                addNewPlayer(player);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,22 +105,73 @@ public class DatabaseSetup  extends LevelKit {
         }
     }
 
-    public synchronized static void addNewPlayer(Player player) {
-       openConnection();
+    public synchronized static Integer getIntPlayerServerJoined(Player player) {
+        openConnection();
         try {
-            System.out.println("CREATING NEW PLAYER FOR " + player.getName());
-            PreparedStatement newPlayer = connection.prepareStatement("INSERT INTO `player_data` values(?,?,0,0,0);");
-            newPlayer.setString(1, player.getPlayer().getName());
-            newPlayer.setString(2, player.getPlayer().getUniqueId().toString());
-            newPlayer.execute();
-            newPlayer.close();
-            if (newPlayer == null) {
-                return;
+            if (playerDataContainsPlayer(player.getPlayer())) {
+                PreparedStatement sql = connection.prepareStatement("SELECT player_serverjoined FROM `player_data` WHERE player_name=?;");
+                sql.setString(1, player.getName());
+                ResultSet result = sql.executeQuery();
+                while (result.next()) {
+                   playerServerJoined = sql.getResultSet().getInt(1);
+                }
+                sql.close();
+                result.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
+        return playerServerJoined;
+    }
+
+    public synchronized static void addIntPlayerCustomLevel(Player player) {
+        openConnection();
+        ScoreboardListener.scoreboardUpdate(player);
+        try {
+            int player_custom_level = 0;
+            if (playerDataContainsPlayer(player.getPlayer())) {
+                PreparedStatement sql = connection.prepareStatement("SELECT player_custom_level FROM `player_data` WHERE player_name=?;");
+                sql.setString(1, player.getPlayer().getName());
+                ResultSet result = sql.executeQuery();
+                result.next();
+                player_custom_level = result.getInt("player_custom_level");
+                PreparedStatement player_custom_levelUpdate = connection.prepareStatement("UPDATE `player_data` SET player_custom_level=? WHERE player_name=?;");
+
+                player_custom_levelUpdate.setInt(1, player_custom_level + 100);
+                player_custom_levelUpdate.setString(2, player.getPlayer().getName());
+                player_custom_levelUpdate.executeUpdate();
+
+                player_custom_levelUpdate.close();
+                sql.close();
+                result.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public synchronized static Integer getIntPlayerCustomLevel(Player player) {
+        openConnection();
+        try {
+            if (playerDataContainsPlayer(player.getPlayer())) {
+                PreparedStatement sql = connection.prepareStatement("SELECT player_custom_level FROM `player_data` WHERE player_name=?;");
+                sql.setString(1, player.getName());
+                ResultSet result = sql.executeQuery();
+                while (result.next()) {
+                    playerCustomLevel = sql.getResultSet().getInt(1);
+                }
+                sql.close();
+                result.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return playerCustomLevel;
     }
 }

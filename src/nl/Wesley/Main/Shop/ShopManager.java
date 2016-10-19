@@ -16,8 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import java.util.ArrayList;
-
 /**
  * Created by Wesley on 10/11/2016.
  */
@@ -28,6 +26,7 @@ public class ShopManager implements Listener{
     public static void ShopRemove() {
         for (Entity entity : SpawnList) {
             entity.remove();
+            SpawnList.remove(entity);
         }
     }
 
@@ -73,7 +72,6 @@ public class ShopManager implements Listener{
         if (e.getEntityType() == EntityType.VILLAGER) {
             if (e.getEntity().getName().equalsIgnoreCase(RED + "Kit Selector")) {
                 e.getEntity().setInvulnerable(true);
-                e.getEntity().getLastDamageCause().setCancelled(true);
             }
         }
     }

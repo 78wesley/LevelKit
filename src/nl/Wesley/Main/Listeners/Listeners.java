@@ -23,7 +23,7 @@ public class Listeners implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         DatabaseSetup.addIntPlayerServerJoined(player);
-        DatabaseSetup.addIntPlayerCustomLevel(player);
+        DatabaseSetup.addIntPlayerCustomLevel(player, 100);
         player.sendMessage(ChatColor.RED + "JE BENT AL "+ DatabaseSetup.getIntPlayerServerJoined(player) + " KEER INGELOGHT");
         ScoreboardListener.scoreboardSetup(player);
         if (!player.hasPlayedBefore()) {

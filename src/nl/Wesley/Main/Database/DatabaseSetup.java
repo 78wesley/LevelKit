@@ -12,11 +12,11 @@ import java.sql.*;
  */
 public class DatabaseSetup {
 
-    static int playerServerJoined;
-    static int playerCustomLevel;
-
+    private static int playerServerJoined;
+    private static int playerCustomLevel;
     public static Connection connection;
 
+    /** openConnection*/
     public synchronized static void openConnection() {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/minecraft", "root", "toor");
@@ -25,6 +25,7 @@ public class DatabaseSetup {
         }
     }
 
+    /** closeConnection*/
     public synchronized static void closeConnection() {
         try {
             connection.close();
@@ -33,6 +34,7 @@ public class DatabaseSetup {
         }
     }
 
+    /** disableConnection*/
     public synchronized static void disableConnection() {
         try {
             if (connection != null && connection.isClosed()) {
@@ -43,6 +45,7 @@ public class DatabaseSetup {
         }
     }
 
+    /** playerDataContainsPlayer*/
     public synchronized static boolean playerDataContainsPlayer(Player player) {
         try {
             PreparedStatement sql = connection.prepareStatement("SELECT * FROM `player_data` WHERE player_name=?;");
@@ -60,6 +63,7 @@ public class DatabaseSetup {
         }
     }
 
+    /** addNewPlayer*/
     public synchronized static void addNewPlayer(Player player) {
         openConnection();
         try {
@@ -76,6 +80,7 @@ public class DatabaseSetup {
         }
     }
 
+    /** playerServerJoined*/
     public synchronized static void addIntPlayerServerJoined(Player player) {
         openConnection();
         try {
@@ -126,34 +131,7 @@ public class DatabaseSetup {
         return playerServerJoined;
     }
 
-    public synchronized static void addIntPlayerCustomLevel(Player player) {
-        openConnection();
-        ScoreboardListener.scoreboardUpdate(player);
-        try {
-            int player_custom_level = 0;
-            if (playerDataContainsPlayer(player.getPlayer())) {
-                PreparedStatement sql = connection.prepareStatement("SELECT player_custom_level FROM `player_data` WHERE player_name=?;");
-                sql.setString(1, player.getPlayer().getName());
-                ResultSet result = sql.executeQuery();
-                result.next();
-                player_custom_level = result.getInt("player_custom_level");
-                PreparedStatement player_custom_levelUpdate = connection.prepareStatement("UPDATE `player_data` SET player_custom_level=? WHERE player_name=?;");
-
-                player_custom_levelUpdate.setInt(1, player_custom_level + 100);
-                player_custom_levelUpdate.setString(2, player.getPlayer().getName());
-                player_custom_levelUpdate.executeUpdate();
-
-                player_custom_levelUpdate.close();
-                sql.close();
-                result.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-    }
-
+    /** playerCustomLevel */
     public synchronized static Integer getIntPlayerCustomLevel(Player player) {
         openConnection();
         try {
@@ -174,4 +152,64 @@ public class DatabaseSetup {
         }
         return playerCustomLevel;
     }
+
+    public synchronized static void addIntPlayerCustomLevel(Player player, int integer) {
+        openConnection();
+        ScoreboardListener.scoreboardUpdate(player);
+        try {
+            int player_custom_level = 0;
+            if (playerDataContainsPlayer(player.getPlayer())) {
+                PreparedStatement sql = connection.prepareStatement("SELECT player_custom_level FROM `player_data` WHERE player_name=?;");
+                sql.setString(1, player.getPlayer().getName());
+                ResultSet result = sql.executeQuery();
+                result.next();
+                player_custom_level = result.getInt("player_custom_level");
+                PreparedStatement player_custom_levelUpdate = connection.prepareStatement("UPDATE `player_data` SET player_custom_level=? WHERE player_name=?;");
+
+                player_custom_levelUpdate.setInt(1, player_custom_level + integer);
+                player_custom_levelUpdate.setString(2, player.getPlayer().getName());
+                player_custom_levelUpdate.executeUpdate();
+
+                player_custom_levelUpdate.close();
+                sql.close();
+                result.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public synchronized static void remIntPlayerCustomLevel(Player player, int integer) {
+        openConnection();
+        ScoreboardListener.scoreboardUpdate(player);
+        try {
+            int player_custom_level = 0;
+            if (playerDataContainsPlayer(player.getPlayer())) {
+                PreparedStatement sql = connection.prepareStatement("SELECT player_custom_level FROM `player_data` WHERE player_name=?;");
+                sql.setString(1, player.getPlayer().getName());
+                ResultSet result = sql.executeQuery();
+                result.next();
+                player_custom_level = result.getInt("player_custom_level");
+                PreparedStatement player_custom_levelUpdate = connection.prepareStatement("UPDATE `player_data` SET player_custom_level=? WHERE player_name=?;");
+
+                player_custom_levelUpdate.setInt(1, player_custom_level - integer);
+                player_custom_levelUpdate.setString(2, player.getPlayer().getName());
+                player_custom_levelUpdate.executeUpdate();
+
+                player_custom_levelUpdate.close();
+                sql.close();
+                result.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    /** playerKills */
+
+
 }

@@ -20,13 +20,13 @@ public class ScoreboardListener {
         Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 
         Objective obj = scoreboard.registerNewObjective("LevelKit", "dummy");
-        obj.setDisplayName(ChatColor.AQUA + "SCOREBOARD NAME");
+        obj.setDisplayName(ChatColor.GOLD + "LevelKit");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score score1 = obj.getScore(ChatColor.DARK_BLUE + "Level : " + DatabaseSetup.getIntPlayerCustomLevel(player));
+        Score score1 = obj.getScore(ChatColor.AQUA + "Level : " + DatabaseSetup.getIntPlayerCustomLevel(player));
         score1.setScore(0);
 
-        Score score2 = obj.getScore(ChatColor.DARK_BLUE + "Name : " + player.getName());
+        Score score2 = obj.getScore(ChatColor.AQUA + "Name : " + player.getName());
         score2.setScore(1);
         player.setScoreboard(scoreboard);
     }

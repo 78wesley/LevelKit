@@ -23,22 +23,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class LevelKit extends JavaPlugin {
 
     static Logger log = Logger.getLogger("Minecraft");
-    String version = " v" + this.getDescription().getVersion();
-    ConsoleCommandSender ConsoleSender = Bukkit.getServer().getConsoleSender();
+    private String version = " v" + this.getDescription().getVersion();
+    private ConsoleCommandSender ConsoleSender = Bukkit.getServer().getConsoleSender();
     private Plugin plugin;
 
     @Override
     public void onEnable() {
-        this.plugin = plugin;
         ConsoleSender.sendMessage(AQUA + "LevelKit"+ version + " Has Been Enabled");
         RegisterCommandAndEvents();
-        ShopManager.ShopSpawn();
+        ShopManager.shopSpawn();
     }
 
     @Override
     public void onDisable() {
         ConsoleSender.sendMessage(AQUA + "LevelKit"+ version + " Has Been Disabled");
-        ShopManager.ShopRemove();
+        ShopManager.shopRemove();
+        ShopManager.shopClear();
         DatabaseSetup.disableConnection();
     }
 
@@ -52,6 +52,7 @@ public class LevelKit extends JavaPlugin {
     public Plugin getPlugin() {
         return plugin;
     }
+
     public Logger getlogger() {
         return plugin.getLogger();
     }

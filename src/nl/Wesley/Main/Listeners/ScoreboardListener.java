@@ -1,9 +1,9 @@
 package nl.Wesley.Main.Listeners;
 
+import static org.bukkit.ChatColor.*;
 import nl.Wesley.Main.Database.DatabaseSetup;
 import nl.Wesley.Main.LevelKit;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -20,16 +20,24 @@ public class ScoreboardListener {
         Scoreboard scoreboard = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 
         Objective obj = scoreboard.registerNewObjective("LevelKit", "dummy");
-        obj.setDisplayName(ChatColor.GOLD + "LevelKit");
+        obj.setDisplayName(GOLD + "LevelKit");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        Score score1 = obj.getScore(ChatColor.AQUA + "Level : " + DatabaseSetup.getIntPlayerCustomLevel(player));
-        score1.setScore(0);
+        Score scoreName = obj.getScore(AQUA + "Name : " + GREEN + player.getName());
+        scoreName.setScore(3);
 
-        Score score2 = obj.getScore(ChatColor.AQUA + "Name : " + player.getName());
-        score2.setScore(1);
+        Score scoreLevel = obj.getScore(AQUA + "Level : " + GREEN + DatabaseSetup.getPlayerCustomLevel(player));
+        scoreLevel.setScore(2);
+
+        Score scoreKills = obj.getScore(AQUA + "Kills : " + GREEN + DatabaseSetup.getPlayerKills(player));
+        scoreKills.setScore(1);
+
+        Score scoreDeaths = obj.getScore(AQUA + "Deaths : " + GREEN + DatabaseSetup.getPlayerDeaths(player));
+        scoreDeaths.setScore(0);
+
         player.setScoreboard(scoreboard);
     }
+
     public static void scoreboardUpdate(Player player) {
         new BukkitRunnable() {
             @Override

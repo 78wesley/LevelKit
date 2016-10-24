@@ -21,18 +21,20 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
  */
 public class ShopManager implements Listener{
 
-    private static ArrayList<Entity> SpawnList = new ArrayList<Entity>();
+    private static ArrayList<Entity> spawnList = new ArrayList<>();
 
-    public static void ShopRemove() {
-        for (Entity entity : SpawnList) {
+    public static void shopRemove() {
+        for (Entity entity : spawnList) {
             entity.remove();
-            SpawnList.remove(entity);
         }
     }
+    public static void shopClear() {
+        spawnList.clear();
+    }
 
-    public static void ShopSpawn() {
+    public static void shopSpawn() {
         World world = Bukkit.getWorlds().get(0);
-        Location loc = new Location(world, 59, 65, 250);
+        Location loc = new Location(world, 59, 65, 250, 0, 0);
         Villager villager = (Villager) world.spawnEntity(loc, EntityType.VILLAGER);
         villager.setProfession(Villager.Profession.BLACKSMITH);
         villager.setAI(false);
@@ -49,10 +51,7 @@ public class ShopManager implements Listener{
         villager.setGravity(true);
         villager.setCollidable(false);
         villager.setInvulnerable(true);
-        if (villager.isInvulnerable()) {
-            return;
-        }
-        SpawnList.add(villager);
+        spawnList.add(villager);
     }
 
     @EventHandler
